@@ -1,0 +1,44 @@
+\documentclass[a4paper, oneside, 12pt, parskip=half]{scrbook}
+
+% TODO: moving to property
+\usepackage{xcolor}
+\usepackage{graphicx}
+\definecolor{mycolor}{HTML}{FF7F00}
+\renewcommand{\contentsname}{Table of content}
+% Hyper links.
+\usepackage[hyperfootnotes=false]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,
+    urlcolor=blue,
+}
+\begin{document}
+
+\tableofcontents
+
+\chapter{Chapter 1 of TeXBook}
+
+2 backticks and 2 single quotes surround a double-quoted string, like ``this''.
+
+\section{Control Sequences}
+
+2 types: \textit{control word} and \textit{control symbol}.
+
+`\texttt{\textbackslash TeX}' (\TeX) is a \textit{control word} because it is made up of \textit{letters}. Any non-letter will end the sequence.
+
+`\texttt{\textbackslash '}' (accent on the letter \texttt{o}: \'o) is a \textit{control symbol} because it is made up of a single \textit{non-letter}. The sequence length will always be 1 character (symbol).
+
+To inject a space after a \textit{control word}, do a `\texttt{\textbackslash \textvisiblespace}'.
+
+\section{Playing with \texttt{hbox}, \texttt{lower}, \texttt{kern}}
+
+A\kern -.1667em\lower .5ex \hbox {B}\kern -.125emC
+
+Reference at https://www.tug.org/utilities/plain/cseq.html.
+
+\section{Playing with color}
+
+\textbf{Start back color {\color{red}followed by a red fragment}, going black again.} \textit{{\color{green} here is green color section.}} \texttt{\color{mycolor} My custom color}
+
+\end{document}
