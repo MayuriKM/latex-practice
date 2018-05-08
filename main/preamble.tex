@@ -1,0 +1,36 @@
+\documentclass[%
+  parskip=full,% empty line after each paragraph.
+  twoside=false% not a 2-sided print for a book.
+]{scrbook}
+
+\raggedright % keep spaces consistent, easier to see errors in typing.
+
+\usepackage{xcolor} % colors!
+
+\usepackage{listings, tcolorbox}
+\input{listings-cfg}
+
+% Shortcuts for oft-used font markup.
+\newcommand{\itf}{\textit}
+\newcommand{\bff}{\textbf}
+\newcommand{\ttf}{\texttt}
+
+% Backslash is used often when writing at LaTeX.
+\newcommand{\bksl}{\textbackslash}
+
+% Clickable TOC
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
+}
+
+% for multiple copy of text
+\usepackage{expl3}
+\ExplSyntaxOn
+\cs_new:Npn \lrnl3 #1
+  { \prg_replicate:nn {#1} {Latex3 \  by \  Mayuri \\*  } }
+\ExplSyntaxOff
