@@ -1,0 +1,41 @@
+\documentclass[a4paper, oneside, 12pt, parskip=half]{scrbook}
+
+\raggedright % keep spaces consistent, easier to see errors in typing.
+% TODO: moving to property
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{listings}
+\usepackage{expl3}
+\input{listings-cfg}
+
+\usepackage[framemethod=TikZ]{mdframed}
+%   Principal MPD frame type
+\mdfdefinestyle{mpdframe}{
+  frametitlebackgroundcolor   = black!5,
+  frametitlerule              = true,
+  roundcorner                 = 1pt,
+  middlelinewidth             = 1pt,
+  innermargin                 = 0.5cm,
+  outermargin                 = 0.5cm,
+  innerleftmargin             = 0.5cm,
+  innerrightmargin            = 0.5cm,
+  innertopmargin              = \topskip,
+  innerbottommargin           = \topskip,
+}
+\mdfdefinestyle{box}{
+  style       = mpdframe,
+  frametitle  = {Title of Frame},
+}
+\newmdenv[style=box]{custombox}
+
+\definecolor{mycolor}{HTML}{FF7F00}
+\renewcommand{\contentsname}{Table of content}
+% Hyper links.
+\usepackage[hyperfootnotes=false]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,
+    urlcolor=blue,
+}

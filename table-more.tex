@@ -1,0 +1,648 @@
+\documentclass[%
+  parskip=full,% empty line after each paragraph.
+  twoside=false% not a 2-sided print for a book.
+]{book}
+
+
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{siunitx} % required for alignment
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+%defined title
+\usepackage{xcolor}
+\usepackage{listings}
+\lstset
+{
+    language=[LaTeX]TeX,
+    breaklines=true,
+    basicstyle=\tt\scriptsize,
+    keywordstyle=\color{blue},
+    identifierstyle=\color{cyan},
+}
+
+
+\sisetup{
+  round-mode    =  places, % Round number
+  round-precision = 3, % to 3 places
+}
+% Shortcuts for oft-used font markup.
+\newcommand{\itf}{\textit}
+\newcommand{\bff}{\textbf}
+\newcommand{\ttf}{\texttt}
+
+% Backslash is used often when writing at LaTeX.
+\newcommand{\bksl}{\textbackslash}
+
+\title{This document for test}
+\author{Tran Dinh Trieu}
+\date{2018-04-22}
+
+\begin{document}
+
+  \pagenumbering{gobble}
+  %generates the title
+  \maketitle
+  %insert the table of content
+
+  \pagenumbering{arabic}
+
+  \setcounter{tocdepth}{2}
+
+  \tableofcontents
+
+\chapter{The first \LaTeX document}
+
+  Hello world!!
+
+\chapter{Using \LaTeX paragraph and section}
+
+\paragraph{paragraph name}
+
+%\section{This is section}
+
+\subsection{This is subcaption}
+
+\subparagraph{subparagraph name}
+Structurring document is easy!
+
+\subsubsection{subsubsection name}
+
+
+\ldots{} and here it ends.
+
+\chapter{Using \LaTeX packages}
+
+Install a packages
+
+Purpose of package
+
+\begin{equation}
+  f(x) = x^2
+\end{equation}
+
+Using / Including a package
+
+% Example 1
+\ldots when Einstein introduced his formula
+\begin{equation}
+e = m \cdot c^2 \; ,
+\end{equation}
+
+which is at the same time the most widely known and the least well understood physical formula.
+
+\chapter{\LaTeX math and equations}
+
+\section{Inline math}
+
+This formula $f(x) = x^2$ is an example.
+
+\section{The equations and align enviroment}
+
+\begin{equation}
+  1 + 2 = 3
+\end{equation}
+\begin{equation}
+  3 = 1 + 2
+\end{equation}
+
+\section{Fraction and more}
+
+
+\begin{align*}
+    f(x) &= x^2\\
+    g(x) &= \frac{1}{x}\\
+    F(x) &= \int^a_b \frac{1}{3} x^3\\
+    h(x) &= \frac{1}{\sqrt{x^2 + x + 1}}
+\end{align*}
+
+\section{Matrices}
+
+$
+\left[
+\begin{matrix}
+  1 & 1 & 3\\
+  1 & 2 & 3\\
+  0 & 1 & 2
+\end{matrix}
+\right]
+*
+\left[
+\begin{matrix}
+  1\\
+  2\\
+  3
+\end{matrix}
+\right]
+$
+
+\chapter{Insert an image in \LaTeX}
+
+\begin{figure}[hb!]
+  \begin{center}
+    \includegraphics []{latex.png}
+    \caption{ a Latex}
+    \label{fig:latex1}
+  \end{center}
+\end{figure}
+
+Figure \ref{fig:latex1} show a latex.
+
+\begin{figure}[h!]
+  \centering
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[width = 52pt]{latex.png}
+    \caption{the first latex.}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[width = 52pt]{latex.png}
+    \caption{the second latex.}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \centering
+    \includegraphics[width = 52pt]{latex.png}
+    \caption{the third latex.}
+  \end{subfigure}
+  \caption{Three latex}
+\end{figure}
+
+
+
+
+\chapter{Bidtex}
+
+This doucument \cite{ARTICLE:1} embeddeed in text.
+This doucument \cite{BOOK:1} embeddeed in text.
+This doucument \cite{BOOK:2} embeddeed in text.
+This doucument \cite{WEBSITE:1} embeddeed in text.
+
+\chapter{Footnotes}
+
+This is some example text \footnote{\label{myfootnote} Hello footnote}.
+\\I'm referring a footnote \ref{myfootnote}
+
+\chapter{Table}
+
+\section{Your first table / table template}
+
+Tables in LaTeX can be created through a combination of the \itf{table} environment and the \itf{tabular} environment. The \itf{table} environment part contains the caption and defines the float for our table, i.e. where in our document the table should be positioned and whether we want it to be displayed centered. The \itf{\bksl caption} and \itf{\bksl label} commands can be used in the same way as for pictures. The actual content of the table is contained within the \textit{tabular} environment.
+
+The tabular environment uses ampersands \& as column seperators and newline symbols \bksl as row seperators. The vertical lines separating the columns of our table ($|$) are passed as an argument to the tabular environment (e.g. \\begin\{tabular\}\{$|l|c|r|$\}) and the letters tell whether we want to align the content to the left (l), to the center (c) or to the right (r) for each column. There should be one letter for every column and a vertical line in between them or in front of them, if we want a vertical line to be shown in the table. Row seperators can be added with the \itf{\bksl hline} command.
+
+\begin{lstlisting}[language=TeX]
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|c|r|}
+
+  \hline
+  \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+  $\alpha$ & $\beta $ & $\gamma$ \\
+    \hline
+    1 & 22.001 & a \\
+    \hline
+    2 & 556 & b\\
+    \hline
+    3 & 232.32293 & c\\
+    \hline
+    4 & 232.32293 & d\\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{This is my first table}
+  \label{tab:table1}
+\end{table}
+\end{lstlisting}
+
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|c|r|} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+  \hline
+    Value 1 & Value 2 & Value 3\\
+    $\alpha$ & $\beta $ & $\gamma$ \\
+    \hline
+    1 & 22.001 & a \\
+    \hline
+    2 & 556 & b\\
+    \hline
+    3 & 232.32293 & c\\
+    \hline
+    4 & 232.32293 & d\\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{This is my first table}
+  \label{tab:table0}
+\end{table}
+
+\section{Align numbers at decimal point}
+
+The first thing we have to do is to include the \textbf{siunitx} package in our preamble and use the command \textbf{\\sisetup} to tell the package how many digital places it should display:
+
+\begin{lstlisting}
+%--
+\sisetup{
+  round-mode       = places,% Round number
+  round-precision  = 3,% to 3 places
+}
+%--
+\end{lstlisting}
+
+Afterwards we can use a new alignment setting in our tables, so besides left (l), center (c) and right (r), there's now an additional setting S, which will align the numbers automagically. In our previous table, there was an alignment problem with the middle column, so I've now changed the alignment setting of the middle column from (c) to (S):
+
+\begin{lstlisting}
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|S|r|}
+
+  \hline
+  \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+  $\alpha$ & $\beta $ & $\gamma$ \\
+    \hline
+    1 & 22.001 & a \\
+    \hline
+    2 & 556 & b\\
+    \hline
+    3 & 232.32293 & c\\
+    \hline
+    4 & 232.32293 & d\\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{This is my first table}
+  \label{tab:table1}
+\end{table}
+\end{lstlisting}
+
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|S|r|} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+  \hline
+  \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+  $\alpha$ & $\beta $ & $\gamma$ \\
+    \hline
+    1 & 22.001 & a \\
+    \hline
+    2 & 556 & b\\
+    \hline
+    3 & 232.32293 & c\\
+    \hline
+    4 & 232.32293 & d\\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{This table uses align numbers at decimal point}
+  \label{tab:table1}
+\end{table}
+
+
+\section{Adding rows and columns}
+
+Now that we've setup our table properly, we can focus on adding more rows and columns. As I've mentioned before, LaTeX uses column separators (\&) and row separators (\bksl \bksl) to layout the cells of our table. For the 6x3 table shown above we can count five times (\bksl \bksl) behind each row and two times (\&) per row, separating the content of three columns.
+
+\subsection{Add row}
+
+If we now want to add an additional row, it's as simple as copy and pasting the previous row and changing the contents. I will be reusing the table from above for this example and add an additional row:
+
+\begin{lstlisting}
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|S|r|}
+
+  \hline
+  \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+  $\alpha$ & $\beta $ & $\gamma$ \\
+    \hline
+    1 & 22.001 & a \\
+    \hline
+    2 & 556 & b\\
+    \hline
+    3 & 232.32293 & c\\
+    \hline
+    4 & 232.32293 & d\\
+    \hline
+    5 & 235.32293 & e\\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{This is my first table}
+  \label{tab:table2}
+\end{table}
+\end{lstlisting}
+\newpage
+This will generate the following output:
+
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|S|r|}
+
+  \hline
+  \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+  $\alpha$ & $\beta $ & $\gamma$ \\
+    \hline
+    1 & 22.001 & a \\
+    \hline
+    2 & 556 & b\\
+    \hline
+    3 & 232.32293 & c\\
+    \hline
+    4 & 232.32293 & d\\
+    \hline
+    5 & 235.32293 & e\\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{This table adds more a row.}
+  \label{tab:table2}
+\end{table}
+
+\subsection{Add collumn}
+
+Adding an additional column is also possible, but you have to be careful, because you have to add a column separator (\&) to every column:
+
+\begin{lstlisting}
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|S|r|r|}
+
+  \hline
+  \bff{Value 1} & \bff{Value 2} & \bff{Value 3} & \bff{Value 4}\\
+  $\alpha$ & $\beta $ & $\gamma$  & $\delta$ \\ % <--
+    \hline
+    1 & 22.001 & a & w\\ %<---
+    \hline
+    2 & 556 & b & x\\%<---
+    \hline
+    3 & 232.32293 & c & y\\ %<---
+    \hline
+    4 & 232.32293 & d & z\\ %<---
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{This is my first table}
+  \label{tab:table3}
+\end{table}
+\end{lstlisting}
+
+This will generate the following output:
+
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|S|r|r|}
+
+  \hline
+  \bff{Value 1} & \bff{Value 2} & \bff{Value 3} & \bff{Value 4} \\
+  $\alpha$ & $\beta $ & $\gamma$  & $\delta$ \\ % <--
+    \hline
+    1 & 22.001 & a & w \\ %<---
+    \hline
+    2 & 556 & b & x \\%<---
+    \hline
+    3 & 232.32293 & c & y \\ %<---
+    \hline
+    4 & 232.32293 & d & z \\ %<---
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{This is my first table}
+  \label{tab:table3}
+\end{table}
+
+\section{Cells spanning multiple rows or multiple columns}
+
+\subsection{Using multirow}
+
+In order for a cell to span multiple rows, we have to use the multirow command. This command accepts three parameters:
+
+\begin{lstlisting}
+  \multirow{NUMBER_OF_COLUMNS}{WIDTH}{CONTENT}
+\end{lstlisting}
+
+I usually use an asterisk (*) as a parameter for the width, since this basically means, that the width should be determined automatically.
+
+Because we're combining two rows in our example, it's necessary to omit the content of the same row in the following line. Let's look at how the actual LaTeX code would look like:
+
+\begin{lstlisting}
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|S|r|} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+  \hline
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta $ & $\gamma$ \\
+    \hline
+    \multirow{2}{*}{1234} & 23.5 & a \\
+    & 75 & b\\
+    \hline
+    3 & 232.32293 & c\\
+    \hline
+    4 & 232.32293 & d\\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{This is my multi row table}
+  \label{tab:table4}
+\end{table}
+\end{lstlisting}
+
+The modified table looks like this:
+
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|S|r|} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+  \hline
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta $ & $\gamma$ \\
+    \hline
+    \multirow{2}{*}{1234} & 23.5 & a \\
+    & 75 & b\\
+    \hline
+    3 & 232.32293 & c\\
+    \hline
+    4 & 232.32293 & d\\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{This is my multi row table}
+  \label{tab:table4}
+\end{table}
+
+You can now see, that the cell containing 12 spans two rows.
+
+\subsection{Using multicolumn}
+
+If we want a cell to span multiple columns, we have to use the multicolumn command. The usage differs a bit from multirow command, since we also have to specifiy the alignment for or column. The command also requires three parameters:
+
+\begin{lstlisting}
+  \multicolumn{NUMBER_OF_COLUMNS}{ALIGNMENT}{CONTENT}
+\end{lstlisting}
+
+In our example, we will again combine two neighboring cells, note that in the row where we're using multicolumn to span two columns, there's only one column separator (\&) (instead of two for all other rows):
+
+\begin{lstlisting}
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|S|r|} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+  \hline
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta $ & $\gamma$ \\
+    \hline
+    \multicolumn{1}{|c|}{11} & a \\
+    \hline
+    \multicolumn{2}{|c|}{22} & b\\
+    \hline
+    3 & 232.32293 & c\\
+    \hline
+    4 & 232.32293 & d\\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{This is my multi column and row table}
+  \label{tab:table5}
+\end{table}
+\end{lstlisting}
+
+This is will result in the following content.
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|S|r|} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+  \hline
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta $ & $\gamma$ \\
+    \hline
+    \multicolumn{2}{|c|}{11} & a \\
+    \hline
+    \multicolumn{2}{|c|}{22} & b\\
+    \hline
+    3 & 232.32293 & c\\
+    \hline
+    4 & 232.32293 & d\\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{This is my multi column and row table}
+  \label{tab:table5}
+\end{table}
+
+\subsection{Combining multirow and multicolumn}
+
+Of course it's also possible to combine the two features, to make a cell spanning multiple rows and columns. To do this, we simply use the \textit{multicolumn} command and instead of specifying content, we add a \textit{multirow} command as the content. We then have to add another multicolumn statement for as many rows as we're combining.
+
+Because this is a little hard to explain, it will be much clearer when looking at the code. In this example, we're going to combine two columns and two rows, so we're getting a cell spanning a total of four cells:
+
+\begin{lstlisting}
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|S|r|} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+  \hline
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta $ & $\gamma$ \\
+    \hline
+    \multicolumn{2}{|c|}{\multirow{2}{*}{1234}} & a \\
+    \multicolumn{2}{|c|}{} & b\\
+    \hline
+    3 & 232.32293 & c\\
+    \hline
+    4 & 232.32293 & d\\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{This is my multi column and row table}
+  \label{tab:table5}
+\end{table}
+\end{lstlisting}
+
+This is will result in the following content.
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|S|r|} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+  \hline
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta $ & $\gamma$ \\
+    \hline
+    \multicolumn{2}{|c|}{\multirow{2}{*}{1234}} & a \\
+    \multicolumn{2}{|c|}{} & b\\
+    \hline
+    3 & 232.32293 & c\\
+    \hline
+    4 & 232.32293 & d\\
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{This is my multi column and row table}
+  \label{tab:table5}
+\end{table}
+
+\section{Prettier tables with booktabs}
+
+Of course beauty is always in the eye of the beholder, but I personally think, that the default hlines used by the table environment are not very pretty. For my tables, i always use the booktabs package, which provides much prettier horizontal separators and the usage is not harder compared to simply using hlines.
+
+Again, we have to add the according booktabs package to our preamble:
+
+\begin{lstlisting}
+  \usepackage{booktabs} % For prettier tables
+\end{lstlisting}
+
+We can now replace the hlines in our example table with toprule, midrule and bottomrule provided by the booktabs package:
+
+\begin{lstlisting}
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|S|r|} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+  \toprule
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta $ & $\gamma$ \\
+    \midrule
+    \multicolumn{2}{|c|}{\multirow{2}{*}{1234}} & a \\
+    \cmidrule{3-3}
+    \multicolumn{2}{|c|}{} & b\\
+    \midrule
+    3 & 232.32293 & c\\
+    \midrule
+    4 & 232.32293 & d\\
+    \midrule
+  \end{tabular}
+  \end{center}
+  \caption{This is my table, replace hline by toprule, midrule, bottomrule}
+  \label{tab:table6}
+\end{table}
+\end{lstlisting}
+
+You can decide for yourself, if you prefer the hlines or the following output:
+
+\begin{table}[h!]
+  \begin{center}
+  \begin{tabular}{|l|S|r|} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+  \toprule
+    \textbf{Value 1} & \textbf{Value 2} & \textbf{Value 3}\\
+    $\alpha$ & $\beta $ & $\gamma$ \\
+    \midrule
+    \multicolumn{2}{|c|}{\multirow{2}{*}{1234}} & a \\
+    \cmidrule{3-3}
+    \multicolumn{2}{|c|}{} & b\\
+    \midrule
+    3 & 232.32293 & c\\
+    \midrule
+    4 & 232.32293 & d\\
+    \midrule
+
+  \end{tabular}
+  \end{center}
+  \caption{This is my table, replace hline by toprule, midrule, bottomrule}
+  \label{tab:table6}
+\end{table}
+
+
+
+\bibliography{note}
+\bibliographystyle{plain}
+
+
+
+
+\end{document}

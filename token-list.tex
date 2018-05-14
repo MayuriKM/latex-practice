@@ -1,0 +1,177 @@
+\documentclass{scrbook}
+\usepackage{expl3, graphicx,caption}
+
+\ExplSyntaxOn
+\cs_new:Npn \demo:n #1
+  {
+    \tl_count:n {#1}
+    \tl_if_empty:nT {#1} { Empty! }
+    \tl_if_blank:nTF {#1}
+      { Blank! }
+      {
+        Head = \tl_head:n {#1}
+        Tail = \tl_tail:n {#1}
+        End
+      }
+  }
+\cs_new_eq:NN \demo \demo:n
+\ExplSyntaxOff
+\newcommand*{\hello}{smilling}
+
+
+
+
+\ExplSyntaxOn
+
+\int_new:N \l_ae_count_value_int
+
+\cs_new_protected:Nn \__ae_space: { ~ }
+
+\cs_new_protected:Npn \myexamplefunction #1#2 {
+  \int_set:Nn \l_ae_count_value_int {0}
+  \noindent
+  \tl_set:Nn \l_ae_string_tl {#2}
+  %% make sure that spaces in the user passed string don't
+  %% get obliterated by the inline map
+  \tl_replace_all:Nnn \l_ae_string_tl {~}{\__ae_space:}
+  \tl_map_inline:Nn \l_ae_string_tl
+    {
+      \int_use:N \l_ae_count_value_int
+      ##1
+      \newline
+      \int_incr:N \l_ae_count_value_int
+      \int_compare:nT
+        { \l_ae_count_value_int > #1 }
+        { \tl_map_break: }
+    }
+}
+
+\ExplSyntaxOff
+
+
+
+
+\begin{document}
+
+\demo{loving smile}
+
+\demo{ }
+
+\demo{}
+
+\demo{\hello}
+
+---------------------------------------------------------------------------------XS
+\begin{tabular}{|c|c|}
+    \hline%
+    \ExplSyntaxOn%
+        \clist_map_inline:nn {A,B,C,D}%
+            {#1: & something \\\hline}%
+    \ExplSyntaxOff%
+\end{tabular}
+
+\begin{tabular}{|c|c|}
+    \hline%
+    \ExplSyntaxOn%
+        \clist_map_inline:nn {A,B,C}%
+            {#1: & something \\\hline}%
+    \ExplSyntaxOff%
+    D: & something \\\hline
+\end{tabular}
+
+--------------------------------------------------------------------------------------
+
+\ExplSyntaxOn
+\cs_if_free:NT \group_insert_after:N
+  {
+    \cs_set_eq:NN \group_insert_after:N \group_execute_after:N
+  }
+
+\cs_generate_variant:Nn \tl_if_empty:nT {v}
+\cs_generate_variant:Nn \tl_show:N {v}
+\cs_new:Nn \group_after_set:NNn
+{
+  % set the variable locally for use inside the group:
+  #1 #2 {#3}
+
+  \cs_if_exist:cF { g_aftergroup_ \int_use:N \etex_currentgrouplevel:D _tl }
+    {
+      \tl_new:c { g_aftergroup_ \int_use:N \etex_currentgrouplevel:D _tl }
+    }
+
+  % first time the function is executed inside the group:
+  \tl_if_empty:vT { g_aftergroup_ \int_use:N \etex_currentgrouplevel:D _tl }
+    {
+      % set up the aftergroup execution:
+      \group_insert_after:c
+        { g_aftergroup_ \int_use:N \etex_currentgrouplevel:D _tl }
+
+      % reset the material for aftergroup execution:
+      \tl_gset:cx { g_aftergroup_ \int_use:N \etex_currentgrouplevel:D _tl }
+        {
+          \tl_gclear:c { g_aftergroup_ \int_use:N \etex_currentgrouplevel:D _tl }
+        }
+    }
+
+  % append the new material to the aftergroup execution:
+  \tl_gput_right:cx
+    { g_aftergroup_ \int_use:N \etex_currentgrouplevel:D _tl }
+    {
+      \exp_not:n { #1 #2 } { \exp_not:V #2 }
+    }
+}
+
+\cs_generate_variant:Nn \group_insert_after:N {c}
+
+\int_new:N \y
+\int_new:N \yy
+
+\cs_generate_variant:Nn \tl_if_eq:nnF {V}
+\cs_new:Nn \assert:Nn
+  {
+    \tl_if_eq:VnF #1 {#2} {[ERROR:\tl_to_str:n{#1~!=~#2}]}
+  }
+
+\group_begin:
+  \group_after_set:NNn \tl_set:Nn \x {xx}
+  \group_after_set:NNn \tl_set:Nn \xx {x}
+  \assert:Nn \x {xx}
+  \assert:Nn \xx {x}
+  \group_begin:
+    \group_after_set:NNn \int_set:Nn \y {3}
+    \group_after_set:NNn \int_set:Nn \yy {2}
+    \assert:Nn \y  {3}
+    \assert:Nn \yy {2}
+  \group_end:
+  \assert:Nn \x {xx}
+  \assert:Nn \xx {x}
+  \assert:Nn \y  {3}
+  \assert:Nn \yy {2}
+
+  % check repeated doesn't break anything:
+  \group_begin:
+    \int_set:Nn \y  {6}
+    \int_set:Nn \yy {5}
+  \group_end:
+  \assert:Nn \x {xx}
+  \assert:Nn \xx {x}
+  \assert:Nn \y  {3}
+  \assert:Nn \yy {2}
+\group_end:
+
+\assert:Nn \x {xx}
+\assert:Nn \xx {x}
+\assert:Nn \y  {0}
+\assert:Nn \yy {0}
+
+\ExplSyntaxOff
+
+------------------------------------------------------------
+
+
+
+\myexamplefunction{5}{this is my string}
+------------------------------------------------------------XS
+
+
+\end{document}

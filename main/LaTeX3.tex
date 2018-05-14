@@ -1,0 +1,105 @@
+\chapter{ The programming environment LaTeX3}
+
+ We need to build the appropriate code to access the \textbf{LaTeX3} programming environment. Before we start work on the \textbf{LaTeX3} programming environment in general, we need to check two pionts first.
+
+ \begin{itemize}
+   \item we are programming in In the preamble of a document. \textbf{or}
+   \item We are creating a new package.
+ \end{itemize}
+
+\section{What we see In both the points}
+
+\subsection{The preamble of a document}
+The LaTeX3 programming code usable with \LaTeX \ is available as a package called expl3.
+
+\begin{outputcfb}
+\documentclass{article}
+\usepackage{expl3}
+\end{outputcfb}
+
+new macros in the programming environment.
+
+\begin{outputcfb}
+\ExplSyntaxOn
+% Code goes here
+\ExplSyntaxOff
+\end{outputcfb}
+
+\subsection{\LaTeXe \  package}
+
+Using \textbf{LaTeX3} programming in a package is to load the code.
+
+\begin{outputcfb}
+\RequirePackage{expl3}
+\end{outputcfb}
+
+After loading the code, to switch the syntex on \cil| \ExplSyntaxOn| command used.
+But more flexible alternative is to declare package using \textbf{LaTeX3}.
+
+Syntex to declare package :
+
+\begin{outputcfb}
+  \ProvidesExplPackage
+    {mypkg}               % Package name
+    {2018-05-03}          % Release date
+    {1.0}                 % Release version
+    {Some things I wrote} % Description
+\end{outputcfb}
+
+\textbf{expl3 packages at :}
+\cil| http://ctan.scidock.com/tex-archive/macros/latex/contrib/l3kernel/expl3.pdf |
+
+For example :
+
+\begin{outputcfb}
+  - In preamble.tex file.
+\usepackage{expl3}
+\ExplSyntaxOn
+\cs_new:Npn \lrnl3 #1
+  { \prg_replicate:nn {#1} {Latex3 \  by \  Mayuri \\* ~ } }
+\ExplSyntaxOff\\*
+
+ - In work environment file.
+
+ \lrnl3{12}
+
+\end{outputcfb}
+
+
+And, Result :
+
+\begin{nbox}
+\lrnl3{12}
+\end{nbox}
+
+\textbf{Note :} This is a special version of the standard \textbf{ProvidesPackage} macro, which will automatically turn on \textbf{LaTeX3} programming syntax and more importantly turn it off at the end of the package. It also deals properly with nested package loading, and so is the recommended way to use \textbf{LaTeX3} syntax inside \textbf{\LaTeXe} \  packages.
+
+\section{The coding environment}
+
+\bff{LaTeX3 syntax in a document or a package:}
+
+\begin{outputcfb}
+~ for space
+
+\ for non-letter
+
+: and _ use as letters by Tex just like LaTeX2e , applied inside  command names and are called Control sequence and also used in conventions of LaTeX3 programming.
+for exampple: \cs_new:Npn and \prg_replicate:nn
+
+@ LaTeX2e automatically makes it a letter in package code but LaTeX3 takes it like a simple letter used in command name.
+
+\end{outputcfb}
+
+\section{Basic document structure of LaTeX3 programming}
+
+\begin{outputcfb}
+\documentclass{scrbook}
+\usepackage{expl3}
+\ExplSyntaxOn
+% Code will go here
+\ExplSyntaxOff
+\begin{document}
+\end{document}
+\end{outputcfb}
+
+\section{The structure of function name}

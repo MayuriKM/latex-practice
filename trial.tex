@@ -1,0 +1,84 @@
+\title{Mayuri's prectice page \LaTeXe}
+\author{Inclucive}
+
+\input{preamble}
+
+
+\usepackage{expl3}
+\ExplSyntaxOn
+\cs_new:Npn \lrnl3 #1
+  { \prg_replicate:nn {#1} {-\  Latex3 \  by \  Mayuri \ ~ } }
+\ExplSyntaxOff
+
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+
+\section{A\textsubscript{B}C}
+
+A\textsubscript{B}C %example of textsubscript
+
+\section{latex}
+\makeatletter
+A$\ensuremath{^{\mbox{\fontsize\sf@size\z@ {\selectfont B}}}}$C
+\makeatother
+
+\newcommand{\mayuri}{M \kern-.3667em\lower.5ex\hbox{\textsuperscript{A}}\kern-.1667em Y\kern-.3667em\hbox{\textsubscript{U}}\kern-.1667em R \kern-.3667em\lower.5ex\hbox{\textsuperscript{I}}\kern-.1667em\@}
+
+\mayuri
+
+\makeatletter
+M$\ensuremath{^{\mbox{\fontsize\sf@size\z@ {\selectfont A}}}}$Y\kern -.1667em\lower .5ex\hbox {U}\kern -.125emR$\ensuremath{^{\mbox{\fontsize\sf@size\z@ {\selectfont I}}}}$
+\makeatother
+
+\section{newcommand}
+
+To create \verb|\newcommand{}| :
+
+\verb|\newcommand{name}[num]{definition}|
+
+two arguments required to make \verb|\newcommand|~~~~~
+\{name\}~: command name which you like to use. it should be related to use of command so that easy identified in future and can not be the same name of other command.
+[num]: number of arguments, starts from 0.
+{definition}: command~ definition~
+
+
+\newcommand{\lbook}{The book about \LaTeX-learning}
+
+
+\begin{itemize}
+\item \lbook BOOK-1
+\item \lbook BOOK-2
+\end{itemize}
+
+After Install \texton|\tcolorbox and \listings| packages. create \texton|\texton and \newcommand| to show command as text.
+Another example of \texton|\newcommand| as bellow.
+
+\tunebox|\LaTeX|
+\tunebox[brown]|Some \LaTeX \code|
+\tunebox[blue]{example of new tcolorbox theme command}
+\tunebox[red]{\textbf{colorbox fun}}
+
+\subsection{Newcommand with parameters}
+
+
+
+
+\section{environment}
+
+\section{latex3}
+
+
+
+
+Result :
+
+\lrnl3{100}
+
+
+
+\end{document}

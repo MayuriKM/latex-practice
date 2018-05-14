@@ -1,0 +1,73 @@
+\chapter{New environment}
+
+\section{How to create an environment.}
+
+We have \bff{command} \cil|\newenvironment{name}[args]{begdef}{enddef}| to create new environment.
+\begin{itemize}
+  \item name: The name of the environment, there must be no currently defined environment by that name and the command name must be undefined.
+  \item The environments are delimited by an opening tag \cil|\begin| (\{begdef\}) and a closing tag \cil|\end| (\{enddef\})
+  \item args: An integer from 1 to 9 denoting the number of arguments of the newly-defined environment. The default is no arguments.
+\end{itemize}
+
+\section{Examples}
+
+\subsection{Create environment without argument}
+
+Defined this code before \ttf{document}
+\begin{outputcfb}
+\newenvironment{nbox}
+  {% Begin codes
+    \begin{center}% Show center
+    \begin{tabular}{|p{0.7\textwidth}|} % The tabular environment have width 70 percent
+    \hline\\ % This will insert a horizontal line on top of the table and at the bottom too
+  }
+  {
+    \\\\\hline
+    \end{tabular}
+    \end{center}
+  }
+\end{outputcfb}
+
+Using
+\begin{outputcfb}
+\begin{nbox}
+This is the text formatted by the boxed environment
+\end{nbox}
+\end{outputcfb}
+
+After build we will have result as below:
+
+\begin{nbox}
+This is the text formatted by the boxed environment
+\end{nbox}
+
+\subsection{Create environment with argument}
+
+Defined this code before \ttf{document}
+\begin{outputcfb}
+\newenvironment{nbox}
+  {% Begin codes
+    \begin{center}% Show center
+    \begin{tabular}{|p{0.7\textwidth}|} % The tabular environment have width 70 percent
+    \hline\\ % This will insert a horizontal line on top of the table and at the bottom too
+    \bff{#1}\\ % Show the argument
+  }
+  {
+    \\\\\hline
+    \end{tabular}
+    \end{center}
+  }
+\end{outputcfb}
+
+Using
+\begin{outputcfb}
+\begin{nboxt}{I'm title}
+This is the text formatted by the boxed environment
+\end{nboxt}
+\end{outputcfb}
+
+Result:
+
+\begin{nboxt}{I'm title}
+This is the text formatted by the boxed environment
+\end{nboxt}

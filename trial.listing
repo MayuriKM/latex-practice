@@ -1,0 +1,6 @@
+  \chapter{latex3}
+  \usepackage{expl3}
+  \ExplSyntaxOn
+  \cs_new:Npn \SayHello #1
+    { \prg_replicate:nn {#1} { Hello~World!~ } }
+  \ExplSyntaxOff

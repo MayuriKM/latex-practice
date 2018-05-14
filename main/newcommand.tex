@@ -1,0 +1,138 @@
+\chapter{New command}
+
+\section{Define new commands}
+
+To add your own commands, use the command \cil|\newcommand|.
+
+\begin{outputcfb}
+  \newcommand{name}[num]{definition}
+\end{outputcfb}
+
+Arguments:
+
+\begin{itemize}
+  \item \itf{name}: name of the command you want to create.
+
+  Required.
+
+  \item \itf{num}: number of arguments the new command takes (up to 9). Defaults to 0.
+
+  Optional.
+
+  \item \itf{definition}: definition of the command.
+
+  Required.
+\end{itemize}
+
+\subsection{Simple commands}
+Example:
+
+\newcommand{\baln}{The book about \LaTeX-learning} %no argument
+
+\begin{outputcfb}
+  \newcommand{\baln}{The book about \LaTeX-learning}
+\end{outputcfb}
+
+Usage:
+\begin{outputcfb}
+  \begin{itemize}
+    \item \baln
+  \end{itemize}
+\end{outputcfb}
+Result:
+
+\begin{itemize}
+  \item \baln
+\end{itemize}
+
+\subsection{Commands with parameters}
+
+The next example illustrates how to define a new command that takes one argument. The \#1 tag gets replaced by the argument you specify. If you wanted to use more than one argument, use \#2 and so on, these arguments are added in an extra set of brackets.
+
+\newcommand{\balnone}[1]{The book about \LaTeX-learning written by #1 } %one argument
+\newcommand{\balntwo}[2]{This book is written by #1 and #2} %two argument
+
+\begin{outputcfb}
+  \newcommand{\balnone}[1]{The book about \LaTeX-learning written by #1 }
+  \newcommand{\balntwo}[2]{This book is written by #1 and #2}
+\end{outputcfb}
+
+Usage:
+
+\begin{outputcfb}
+  \begin{itemize}
+    \item \balnone{Jon}
+    \item \balntwo{Jon}{3 others}
+  \end{itemize}
+\end{outputcfb}
+
+Result:
+
+\begin{itemize}
+  \item \balnone{Jon}
+  \item \balntwo{Jon}{3 others}
+\end{itemize}
+
+\subsection{Commands with optional parameters }
+
+With \LaTeXe, it is also possible to add a default parameter to a command with the following syntax:
+
+\begin{outputcfb}
+  \newcommand{name}[num][default]{definition}
+\end{outputcfb}
+
+If the default parameter of \cil|\newcommand| is present, then the first of the number of arguments specified by num is optional with a default value of \ttf{default}; if absent, then all of the arguments are required.
+
+Example:
+
+Create a newcommand with three arguments, one of which is optional (and thus has default value).
+
+\newcommand{\balndf}[3][\LaTeX-learning]{The book about #1 written by #2 and #3 } %three argument
+
+\begin{outputcfb}
+  \newcommand{\balndf}[3][\LaTeX-learning]
+      {The book about #1 written by #2 and #3 }
+\end{outputcfb}
+
+Usage:
+
+\begin{outputcfb}
+  \begin{itemize}
+    \item \balndf{Jon}{3 others}
+    \item \balndf[LaTeX]{Jon}{3 others}
+  \end{itemize}
+\end{outputcfb}
+
+Result:
+
+\begin{itemize}
+  \item \balndf{Jon}{3 others}
+  \item \balndf[LaTeX]{Jon}{3 others}
+\end{itemize}
+
+\bff{Note:}
+
+When the command is used with an explicit first parameter, it is given enclosed with square brackets (in our example: ``\ttf{[LaTeX]}").
+
+\section{Redefine existing commands}
+
+If you define a command that has the same name as an already existing \LaTeX\ command you will see an error message in the compilation of your document, and the command you defined will not work. If you really want to redefine an existing command, this can be accomplished by \cil|\renewcommand|:
+
+\begin{outputcfb}
+  \renewcommand{name}[num][default]{definition}
+\end{outputcfb}
+
+Example:
+
+I want to renewcommand \cil|\LaTeX| (\LaTeX) to change \lower.5ex\hbox{\textsuperscript{A}} into \lower.7ex\hbox{\textsuperscript{a}}:
+
+\renewcommand{\LaTeX}{L\kern-.3667em\lower.5ex\hbox{\textsuperscript{a}}\kern-.1667emT\kern-.1667em\lower.5ex\hbox{E}\kern-.125em X\@}
+
+\begin{outputcfb}
+    \renewcommand{\LaTeX}{L\kern-.3667em\lower.7ex\hbox{\textsuperscript{a}}
+        \kern-.1667emT\kern-.1667em\lower.5ex\hbox{E}\kern-.125em X\@}
+\end{outputcfb}
+
+Result:
+
+Now, the \cil|\LaTeX| command will output \LaTeX.

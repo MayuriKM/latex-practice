@@ -1,0 +1,165 @@
+\chapter{The Basics}
+
+2 backticks and 2 single quotes surround a double-quoted string, like ``this''.
+
+\section{Control Sequences}
+
+Also known as \itf{commands}.
+
+2 types: fi{control word} and \itf{control symbol}.
+
+\cil|\TeX| (\TeX) is a \itf{control word} because it is made up of \itf{letters}. Any non-letter will end the sequence.
+
+\cil|\'| (accent on the letter \ttf{o}: \'o) is a \itf{control symbol} because it is made up of a single \itf{non-letter}. The sequence length will always be 1 character (symbol).
+
+To inject a space after a \itf{control word}, do a `\ttf{\bksl \textvisiblespace}'.
+
+\section{Tracing LaTeX}
+
+To trace LaTeX commands, use the \cil|\show| command.
+
+Start a new LaTeX file, say `\ttf{testing.tex}'. Inside, type \cil|\show\thinspace|, and compile. Inside the file \itf{output/testing.log}, you should see:
+
+\begin{outputcfb}
+> \thinspace=macro:
+->\kern .16667em .
+\end{outputcfb}
+
+This means that \cil|\thinspace| simply inserts a space of width \ttf{.16667em}.
+
+Now, you can try \cil|\show\TeX|, which should show:
+
+\begin{outputcfb}
+> \TeX=macro:
+->T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\@.
+\end{outputcfb}
+
+This means that \cil|\TeX|:
+
+\begin{itemize}
+  \item Shows a \ttf{T},
+  \item Reduces the distance between that and the next letter,
+  \item Lowers the horizontal box that will be created next,
+  \item Creates a horizontal box that contains a letter \ttf{E},
+  \item Reduces the distance between that and the next letter,
+  \item Shows a \ttf{X}.
+\end{itemize}
+
+\subsection{Primitive Control Sequences}
+
+Primitive control sequences will be indicated by the lack of the word ``\itf{macro}''. See \cil|\show\TeX| to remind yourself how a macro definition looks like.
+
+\bff{NB}: Non-primitive control sequences are also known as ``\itf{macros}''.
+
+For example, \cil|\show\kern| will indicate that \cil|\kern| is a primitive:
+
+\begin{outputcfb}
+> \kern=\kern.
+\end{outputcfb}
+
+Other primitives are \cil|\show|, \cil|\lower|, \cil|\hbox|, etc.
+
+\subsection{Protected Macros}
+
+Protected macros cannot be expanded. To understand that, let's see what happens when you instruct the LaTeX compiler to execute \cil|\show\thinspace|:
+
+\begin{itemize}
+  \item Expand \cil|\show|, which executes a function that \bff{displays (not execute) the codes coming next}.
+  \item Expand \cil|\thinspace|, which becomes the codes that define the macro \cil|\thinspace|.
+\end{itemize}
+
+Normally, the LaTeX compiler will execute the codes that define the macro \cil|\thinspace|. However, since we prefixed that with the command \cil|\show|, the LaTeX compiler simply shows (not executes) the codes.
+
+Now, try to compile \cil|\show\textsuperscript|, and you will see:
+
+\begin{outputcfb}
+> \textsuperscript=macro:
+->\protect \textsuperscript  .
+\end{outputcfb}
+
+Because the \cil|\textsuperscript| is protected, LaTeX refuses to expand it. However, whatever is inside \cil|\csname \endcsname| will always be expanded. The ``\itf{cs}'' here means ``\itf{control sequence}''. \bff{NB}: The argument inside is a control sequence name (eg ``\ttf{textsuperscript}'') without the backslash.
+
+Still, we cannot do \cil|\show\csname textsuperscript \endcsname|. That will only show the definition of \cil|\csname|!
+
+We need to tell LaTex to expand \cil|\show| only after expanding \cil|\csname textsuperscript \endcsname|. So we do
+
+\begin{codecfb}
+\expandafter\show\csname textsuperscript \endcsname
+\end{codecfb}
+
+LaTeX will compile our instruction in these steps:
+
+\begin{itemize}
+  \item Expand \cil|\expandafter| and execute the command to \bff{skip} \cil|\show| \bff{for now}.
+  \item Expand \cil|\csname textsuperscript \endcsname| into \cil|\textsuperscript| but with a difference --- that control sequence can now be expanded! (It was protected from expansion, originally.)
+  \item Expand \cil|\show|, which executes the command to \bff{show (not execute) the codes of the next command}.
+\end{itemize}
+
+\subsection{@ (at) Symbol Restricted}
+
+So,
+
+\begin{codecfb}
+\expandafter\show\csname textsupercript \endcsname
+\end{codecfb}
+
+gives:
+
+\begin{outputcfb}
+> \textsuperscript =macro:
+#1->\@textsuperscript {\selectfont #1}.
+\end{outputcfb}
+
+That means \cil|\textsuperscript| calls another function --- \cil|\@textsuperscript|.
+
+When we try \cil|\show\@textsuperscript|, we get:
+
+\begin{outputcfb}
+> \@=macro:
+->\spacefactor \@m {}.
+\end{outputcfb}
+
+That means \cil|\@| itself is a \itf{control sequence}! (A \itf{control symbol}, to be precise; recall that a \itf{control symbol} doesn't need a space after.) We need to make the `\ttf{@}' symbol a letter, not a macro. The name of the macro we want to show is `\ttf{@textsuperscript}' (16 letters long).
+
+This is what will work:
+
+\begin{outputcfb}
+\makeatletter
+\show\@textsuperscript
+\makeatother
+\end{outputcfb}
+
+And that gives us:
+
+\begin{outputcfb}
+> \@textsuperscript=macro:
+#1->{\m@th \ensuremath {^{\mbox {\fontsize \sf@size \z@ #1}}}}.
+\end{outputcfb}
+
+\section{Macros For Your Convenience}
+
+Non-primitive commands are a combination of primitive and non-primitive commands. As we have seen above, the non-primitive \cil|\textsuperscript| is built with the non-primitives \cil|\@textsuperscript| and \cil|\selectfont|. And digging deeper, the non-primitive \cil|\@textsupercript| is built with these non-primitives --- \cil|\m@th|, \cil|\ensuremath|, and so on.
+
+To see how this all ends in primitives, we look at \cil|\makeatletter\show\m@th\makeatother|, which points us to the primitive \cil|\mathsurround|.
+
+\bff{The point is that all non-primitives are ultimately built with primitives.}
+
+Non-primitives are created for our convenience. For example, to achieve the same effect as \cil|A\textsuperscript\{B\}C| without using the macro \cil|\textsuperscript|, we would need to do:
+
+\begin{outputcfb}
+A$\ensuremath{^{\mbox{\fontsize\sf@size\z@ {\selectfont B}}}}$C
+\end{outputcfb}
+
+(Note: \cil|\mathsurround| actually gives you \cil|\$ \$|, which creates a \itf{math environment}.)
+
+As you can see in the following, both create the same effect:
+
+\makeatletter
+TeX way: A$\ensuremath{^{\mbox{\fontsize\sf@size\z@ {\selectfont B}}}}$C
+\makeatother
+
+LaTeX way: A\textsuperscript{B}C
+
+Exercise: Can you try to execute \cil|\TeX| (\TeX) using its underlying definition?
+
+Exercise: What is the underlying definition of \cil|\textsubscript|?

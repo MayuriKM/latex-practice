@@ -1,0 +1,22 @@
+\documentclass{article}
+\usepackage{lipsum}
+% add any other packages here.
+\usepackage{hyperref}
+
+\title{My Document}
+\author{A. U. Thor}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\section{A Section}\label{sec:hello}
+This section will automatically be added to the table of contents, as normal. The table of
+contents entry for this section will automatically hyperlink to it. Also, a PDF bookmark
+will be added.
+
+\section{Another Section}\hyperref[sec:hello]
+I am not this body I am the soul, Shivohum I am shiva.
+
+
+\end{document}

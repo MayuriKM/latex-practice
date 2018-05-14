@@ -1,0 +1,49 @@
+\documentclass[a4paper, oneside, 12pt, parskip=half]{scrbook}
+
+% TODO: moving to property
+\usepackage{xcolor}
+\usepackage{graphicx}
+
+\definecolor{mycolor}{HTML}{FF7F00}
+\renewcommand{\contentsname}{Table of content}
+% Hyper links.
+\usepackage[hyperfootnotes=false]{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,
+    urlcolor=blue,
+}
+\show\thinspace
+
+\show\TeX
+
+\show\kern
+
+\show\textsuperscript
+
+\expandafter\show\csname textsuperscript \endcsname
+
+\begin{document}
+
+\tableofcontents
+
+\show\@textsuperscript
+
+\makeatletter
+\show\@textsuperscript
+\makeatother
+
+\makeatletter\show\m@th\makeatother
+
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{latex.jpeg}
+  \caption{A Logo of Latex.}
+  \label{fig:Logo}
+\end{figure}
+
+Figure \ref{fig:Logo} shows a Logo in actual size.
+
+\end{document}
