@@ -1,0 +1,26 @@
+\documentclass{scrbook}
+
+\usepackage{xparse}
+
+\ExplSyntaxOn
+\tl_new:N \l_my_a_tl
+\tl_new:N \l_my_b_tl
+
+\tl_set:Nn \l_my_a_tl { stuff }
+\tl_set:Nn \l_my_b_tl { ~more~stuff }
+
+\DeclareDocumentCommand \foo { } {%
+  \tl_use:N \l_my_a_tl
+}
+
+
+\tl_set:Nn \l_my_a_tl { stuff }
+\tl_put_right:Nn \l_my_a_tl { ~here }
+\tl_put_left:Nn \l_my_a_tl { My~ }
+\tl_put_right:Nn \l_my_a_tl { l_my_b_tl }
+
+\ExplSyntaxOff
+
+\begin{document}
+\foo
+\end{document}

@@ -1,0 +1,161 @@
+\documentclass{scrbook}
+\usepackage[a4paper,margin=1cm]{geometry}
+\usepackage{xparse,booktabs}
+
+\ExplSyntaxOn
+\NewDocumentCommand{\TypesetTable}{ O{10} m }
+ {
+  \nebu_typeset_table:nn { #1 } { #2 }
+ }
+
+\keys_define:nn { nebutable }
+ {
+  Del1 .tl_set:N = \l__nebu_deli_tl,
+  PDel1 .tl_set:N = \l__nebu_pdeli_tl,
+  Del2 .tl_set:N = \l__nebu_delii_tl,
+  PDel2 .tl_set:N = \l__nebu_pdelii_tl,
+ }
+
+\int_new:N \l__nebu_columns_int
+\int_new:N \l__nebu_pdeli_total_int
+\int_new:N \l__nebu_pdelii_total_int
+\int_new:N \l_nebu_countrows_int
+\seq_new:N \l__nebu_deli_seq
+\seq_new:N \l__nebu_pdeli_seq
+\seq_new:N \l__nebu_delii_seq
+\seq_new:N \l__nebu_pdelii_seq
+\tl_new:N \l__nebu_preamble_tl
+\tl_new:N \l__nebu_table_body_tl
+
+\cs_new_protected:Npn \nebu_typeset_table:nn #1 #2
+ {
+  \keys_set:nn { nebutable } { #2 }
+  \seq_set_split:NnV \l__nebu_deli_seq { , } \l__nebu_deli_tl
+  \seq_set_split:NnV \l__nebu_pdeli_seq { , } \l__nebu_pdeli_tl
+  \seq_set_split:NnV \l__nebu_delii_seq { , } \l__nebu_delii_tl
+  \seq_set_split:NnV \l__nebu_pdelii_seq { , } \l__nebu_pdelii_tl
+  % Compute the number of inner columns
+  \int_set:Nn \l__nebu_columns_int
+   {
+    \int_min:nn { #1 }
+     {
+      \int_max:nn { \seq_count:N \l__nebu_deli_seq }
+                  { \seq_count:N \l__nebu_delii_seq }
+     }
+   }
+  % Define the table preamble
+  \tl_set:Nx \l__nebu_preamble_tl
+   { l c *{ \int_to_arabic:n { \l__nebu_columns_int } } { c } c }
+  % Compute the total for Del1
+  \int_zero:N \l__nebu_pdeli_total_int
+  \seq_map_inline:Nn \l__nebu_pdeli_seq
+   { \int_set:Nn \l__nebu_pdeli_total_int { \l__nebu_pdeli_total_int + ##1 } }
+  % Compute the total for Del2
+  \int_zero:N \l__nebu_pdelii_total_int
+  \seq_map_inline:Nn \l__nebu_pdelii_seq
+   { \int_set:Nn \l__nebu_pdelii_total_int { \l__nebu_pdelii_total_int + ##1 } }
+  % Start building the table contents
+  \tl_clear:N \l__nebu_table_body_tl
+  \tl_put_right:Nx \l__nebu_table_body_tl
+   { \exp_not:N \multicolumn { \int_to_arabic:n { \l__nebu_columns_int + 2 } } { c } { } }
+  \tl_put_right:Nn \l__nebu_table_body_tl { & Sum \\ \midrule }
+
+  % Insert Del1
+  \__nebu_insert_table_part:nn { deli } { Del~1 }
+  \tl_put_right:Nn \l__nebu_table_body_tl { \midrule }
+  % Insert Del2
+  \__nebu_insert_table_part:nn { delii } { Del~2 }
+
+  % Add total
+  \tl_put_right:Nx \l__nebu_table_body_tl
+   {
+    \exp_not:N \midrule
+    \exp_not:N \multicolumn
+                { \int_to_arabic:n { 2 + \l__nebu_columns_int } }
+                { r }
+                { Total~antall~poeng }
+    &
+    \int_to_arabic:n { \l__nebu_pdeli_total_int + \l__nebu_pdelii_total_int }
+    \exp_not:N \\
+   }
+
+  % Print the table
+  \use:x{ \exp_not:N \begin{tabular}{\l__nebu_preamble_tl} }
+  \toprule
+  \l__nebu_table_body_tl
+  \bottomrule
+  \end{tabular}
+}
+
+\cs_new_protected:Npn \__nebu_insert_table_part:nn #1 #2
+ {
+  \int_set:Nn \l_nebu_countrows_int
+   {
+    \seq_count:c { l__nebu_#1_seq } / \l__nebu_columns_int
+   }
+  \int_step_inline:nnnn { 1 } { 1 } { \l_nebu_countrows_int }
+   {
+    % First line
+    \int_compare:nTF { ##1 = 1 }
+     {
+      \tl_put_right:Nn \l__nebu_table_body_tl { #2 & Oppgave & }
+     }
+     {
+      \tl_put_right:Nx \l__nebu_table_body_tl
+       { \exp_not:N \cmidrule{3-\int_to_arabic:n { \l__nebu_columns_int + 3 }} }
+      \tl_put_right:Nn \l__nebu_table_body_tl { & & }
+     }
+    \int_step_inline:nnnn
+     { (##1 - 1)*\l__nebu_columns_int + 1 }
+     { 1 }
+     { ##1 * \l__nebu_columns_int }
+     {
+      \tl_put_right:Nx \l__nebu_table_body_tl
+       { \seq_item:cn { l__nebu_#1_seq } { ####1 } & }
+     }
+     \tl_put_right:Nn \l__nebu_table_body_tl { \\ }
+     % Second line
+    \int_compare:nTF { ##1 = 1 }
+     { \tl_put_right:Nn \l__nebu_table_body_tl { & Poeng & } }
+     { \tl_put_right:Nn \l__nebu_table_body_tl { & & } }
+     \int_step_inline:nnnn
+      { (##1 - 1)*\l__nebu_columns_int + 1 }
+      { 1 }
+      { ##1 * \l__nebu_columns_int }
+      {
+       \tl_put_right:Nx \l__nebu_table_body_tl
+        { \seq_item:cn { l__nebu_p#1_seq } { ####1 } & }
+      }
+      \tl_put_right:Nx \l__nebu_table_body_tl
+       {
+        \int_compare:nT { ##1 = 1 }
+         { \int_to_arabic:n { \use:c { l__nebu_p#1_total_int } } }
+        \exp_not:N \\
+       }
+   }
+ }
+
+\ExplSyntaxOff
+
+\setlength{\parindent}{0pt} % just for the example
+
+\begin{document}
+
+\TypesetTable{
+  Del1= {1a1,1a2,1a3,1b1,1b2,1b3,1c,1d1,1d2,1d3,1e1,1e2,1f,1g1,1g2,1g3},
+  PDel1={1,  1,  1,  1,  2,  2,  2, 2,  0,  2,  2,  2,  2, 2,  2,  0},
+  Del2= {2a,2b,2c,2d,2e,2f,3a1,3a2,3b,4a,4b,4c,4d,5a,5b,5c,6a,6b},
+  PDel2={2, 2, 2, 2, 2, 2, 2,  2,  3, 2, 2, 2, 2, 1, 2, 2, 2, 2}
+}
+
+\bigskip
+
+\TypesetTable[8]{
+  Del1= {1a1,1a2,1a3,1b1,1b2,1b3,1c,1d1,1d2,1d3,1e1,1e2,1f,1g1,1g2,1g3},
+  PDel1={1,  1,  1,  1,  2,  2,  2, 2,  0,  2,  2,  2,  2, 2,  2,  0},
+  Del2= {2a,2b,2c,2d,2e,2f,3a1,3a2,3b,4a,4b,4c,4d,5a,5b,5c,6a,6b},
+  PDel2={2, 2, 2, 2, 2, 2, 2,  2,  3, 2, 2, 2, 2, 1, 2, 2, 2, 2}
+}
+
+
+\end{document}
