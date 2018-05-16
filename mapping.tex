@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage{expl3}
+
+\ExplSyntaxOn
+
+\int_new:N \l_ae_count_value_int
+
+\cs_new_protected:Nn \__ae_space: { ~ }
+
+\cs_new_protected:Npn \myexamplefunction #1#2 {
+  \int_set:Nn \l_ae_count_value_int {0}
+  \noindent
+  \tl_set:Nn \l_ae_string_tl {#2}
+  %% make sure that spaces in the user passed string don't
+  %% get obliterated by the inline map
+  \tl_replace_all:Nnn \l_ae_string_tl {~}{\__ae_space:}
+  \tl_map_inline:Nn \l_ae_string_tl
+    {
+      \int_use:N \l_ae_count_value_int
+      ##1
+      \newline
+      \int_incr:N \l_ae_count_value_int
+      \int_compare:nT
+        { \l_ae_count_value_int > #1 }
+        { \tl_map_break: }
+    }
+}
+
+\ExplSyntaxOff
+
+\begin{document}
+
+\myexamplefunction{5}{{~this}{~is}{~my}{~string}{~and}{~XSover}}
+
+\ExplSyntaxOn
+\cs_new_protected:Npn \bob_examplefunction:nn #1 #2
+ {
+  \int_step_inline:nnnn { 0 } { 1 } {#1}
+   { Iteration ~ ##1 ~ results ~ in ~ ``\tl_item:nn {#2} { ##1 + 1 }''.\par }
+ }
+\bob_examplefunction:nn {5} {Whatever}
+\ExplSyntaxOff
+
+\end{document}
