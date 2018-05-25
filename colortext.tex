@@ -1,14 +1,21 @@
-\documentclass{article}
+\documentclass{scrbook}
+
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 
 \usepackage[usenames, dvipsnames]{color}
 
+\usepackage[dvipsnames]{xcolor}
+\colorlet{LightRubineRed}{RubineRed!70!}
+\colorlet{Mycolor1}{green!10!orange!90!}
+\definecolor{Mycolor2}{HTML}{00F9DE}
+
 \definecolor{mypink1}{rgb}{0.858, 0.188, 0.478}
 \definecolor{mypink2}{RGB}{219, 48, 122}
 \definecolor{mypink3}{cmyk}{0, 0.7808, 0.4429, 0.1412}
 \definecolor{mygray}{gray}{0.6}
-
+\pagecolor{black}
+\color{white}
 \begin{document}
 
 This example shows different examples on how to use the \texttt{color} package
@@ -36,5 +43,21 @@ User-defined colours with different colour models:
 \item \textcolor{mypink3}{Pink with cmyk}
 \item \textcolor{mygray}{Gray with gray}
 \end{enumerate}
+
+This document present several examples on how to use the \texttt{color} package
+to change the colour of elements in \LaTeX.
+
+\begin{itemize}
+\item \textcolor{Mycolor1}{First item}
+\item \textcolor{Mycolor2}{Second item}
+\end{itemize}
+
+\noindent
+{\color{LightRubineRed} \rule{\linewidth}{1mm} }
+
+\noindent
+{\color{RubineRed} \rule{\linewidth}{1mm} }
+
+
 
 \end{document}
