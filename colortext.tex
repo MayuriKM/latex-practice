@@ -4,6 +4,11 @@
 
 \usepackage[usenames, dvipsnames]{color}
 
+\definecolor{mypink1}{rgb}{0.858, 0.188, 0.478}
+\definecolor{mypink2}{RGB}{219, 48, 122}
+\definecolor{mypink3}{cmyk}{0, 0.7808, 0.4429, 0.1412}
+\definecolor{mygray}{gray}{0.6}
+
 \begin{document}
 
 This example shows different examples on how to use the \texttt{color} package
@@ -21,5 +26,15 @@ to change the colour of elements in \LaTeX.
 The background colour of some text can also be \textcolor{red}{easily} set. For
 instance, you can change to orange the background of \colorbox{BurntOrange}{this
 text} and then continue typing.
+
+
+User-defined colours with different colour models:
+
+\begin{enumerate}
+\item \textcolor{mypink1}{Pink with rgb}
+\item \textcolor{mypink2}{Pink with RGB}
+\item \textcolor{mypink3}{Pink with cmyk}
+\item \textcolor{mygray}{Gray with gray}
+\end{enumerate}
 
 \end{document}
