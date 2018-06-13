@@ -1,0 +1,61 @@
+#under-attack-form {
+  border-top: 1px solid #ddd;
+  form {
+    input[type="text"], textarea, select {
+      border-radius: 2px;
+      border: 1px solid #ddd;
+      padding: 10px 15px;
+      width: 100%;
+    }
+  }
+}
+
+.mobile #under-attack-form form {
+  input[type="text"], textarea, select {
+    max-width: 100%;
+  }
+}
+
+#under-attack-form span.bfElemWrap {
+  padding: 0;
+  margin: 0;
+  margin-right: 2%;
+  float: left;
+  width: 48%;
+}
+
+.mobile #under-attack-form span.bfElemWrap {
+  width: 100%;
+  margin: 0 0 10px;
+  padding: 0;
+  float: none;
+  display: block;
+}
+
+#under-attack-form {
+  section.bfElemWrap {
+    width: 98%;
+    padding: 0;
+    margin: 0;
+  }
+  .bfNoSection {
+    margin-bottom: 15px;
+  }
+  .bfSubmitButton.button, .bfNextButton.button {
+    float: none;
+    border-radius: 3px;
+    font-size: 16px;
+    padding: 10px 40px;
+    margin: 0;
+  }
+  .bfLabelLeft label {
+    font-weight: 300;
+    font-size: 14px;
+    float: none;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  .bfClearfix > div > span {
+    display: none;
+  }
+}

@@ -1,0 +1,4 @@
+\ExplSyntaxOn
+\tl_set:Nn \l_first_m_tl { { India, } ~ { Singapore, } ~ and ~ { China } }%example of mappings
+\tl_map_inline:Nn\l_first_m_tl{'#1',~a~Beautiful~Country~. \\}
+\ExplSyntaxOff
